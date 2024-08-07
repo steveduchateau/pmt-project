@@ -1,0 +1,76 @@
+/* Styles pour le titre */
+.title {
+  text-align: center;
+  color: #007bff; /* Bleu */
+  margin-bottom: 20px;
+}
+
+/* Styles pour le conteneur */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+/* Styles pour les messages de succès */
+.success-message {
+  color: #28a745; /* Vert */
+  background-color: #d4edda; /* Fond vert clair */
+  border: 1px solid #c3e6cb; /* Bordure verte */
+  border-radius: 5px;
+  padding: 15px;
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Styles pour les messages d'erreur */
+.error-message {
+  color: #dc3545; /* Rouge */
+  background-color: #f8d7da; /* Fond rouge clair */
+  border: 1px solid #f5c6cb; /* Bordure rouge */
+  border-radius: 5px;
+  padding: 15px;
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Styles généraux pour les formulaires */
+form {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+/* Styles pour les inputs et les labels */
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #007bff; /* Bleu */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #c0c0c0;
+}
