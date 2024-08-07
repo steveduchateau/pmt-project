@@ -1,0 +1,40 @@
+<div class="container">
+  <h1 class="title">Inscription</h1>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="username">Nom d'utilisateur:</label>
+      <input id="username" formControlName="username" />
+      <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+        Nom d'utilisateur requis.
+      </div>
+    </div>
+
+    <div>
+      <label for="email">Email:</label>
+      <input id="email" formControlName="email" />
+      <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+        <div *ngIf="registerForm.get('email')?.errors?.['required']">Email requis.</div>
+        <div *ngIf="registerForm.get('email')?.errors?.['email']">Format d'email invalide.</div>
+      </div>
+    </div>
+
+    <div>
+      <label for="password">Mot de passe:</label>
+      <input id="password" type="password" formControlName="password" />
+      <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+        Mot de passe requis.
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="registerForm.invalid">S'inscrire</button>
+
+    <div *ngIf="successMessage" class="success-message">
+      <p>Succès: {{ successMessage }}</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      <p>Erreur: {{ errorMessage }}</p>
+    </div>
+  </form>
+</div>
