@@ -1,0 +1,16 @@
+<div>
+  <h1>Hello, {{ title }}</h1>
+  <nav>
+    <!-- Boutons visibles seulement si l'utilisateur n'est pas connecté -->
+    <button *ngIf="!isUserAuthenticated()" (click)="goToInscription()">Inscription</button>
+    <button *ngIf="!isUserAuthenticated()" (click)="goToConnexion()">Connexion</button>
+
+    <!-- Boutons visibles seulement si l'utilisateur est connecté -->
+    <button *ngIf="isUserAuthenticated()" (click)="goToCreateProject()">Créer un projet</button>
+    <button *ngIf="isUserAuthenticated()" (click)="goToTaskDashboard()">Tableau de Bord des Tâches</button>
+    <button *ngIf="isUserAuthenticated()" (click)="logout()">Déconnexion</button>
+  </nav>
+
+  <!-- La zone où les routes seront affichées -->
+  <router-outlet></router-outlet>
+</div>

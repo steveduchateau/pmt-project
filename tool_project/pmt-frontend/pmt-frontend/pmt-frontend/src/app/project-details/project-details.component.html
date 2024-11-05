@@ -1,0 +1,130 @@
+<div *ngIf="currentProjectId">
+    <h1>Détails du projet</h1>
+  
+    <div>
+      <h2>Membres du projet</h2>
+      <div *ngFor="let member of projectMembers">
+        <span>{{ member.email }} ({{ member.role }})</span>
+        <!-- Vérifie si l'utilisateur est admin avant d'afficher le bouton de suppression -->
+        <button mat-button *ngIf="isAdmin" (click)="removeMember(member)">Supprimer</button>
+      </div>
+  
+      <h3 *ngIf="isAdmin">Inviter un membre</h3>
+      <div *ngIf="isAdmin">
+        <mat-form-field appearance="fill">
+          <mat-label>Email du membre</mat-label>
+          <input matInput [(ngModel)]="newMemberEmail" />
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Rôle</mat-label>
+          <mat-select [(ngModel)]="newMemberRole">
+            <mat-option value="membre">Membre</mat-option>
+            <mat-option value="admin">Admin</mat-option>
+            <mat-option value="observer">Observateur</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="inviteMember()">Inviter</button>
+      </div>
+    </div>
+  
+    <div>
+      <h2>Tâches du projet</h2>
+      <div *ngFor="let task of tasks">
+        <h3>{{ task.name }}</h3>
+        <p>Description : {{ task.description }}</p>
+        <p>Date d'échéance : {{ task.dueDate }}</p>
+        <p>Priorité : {{ task.priority }}</p>
+        <p>Assigné à : {{ task.assignedTo }}</p>
+        <p>Statut : {{ task.status }}</p>
+  
+        <div *ngIf="!isObserver">
+          <button mat-button (click)="editTask(task)">Éditer</button>
+        </div>
+      </div>
+  
+      <h3 *ngIf="!isObserver">Créer une nouvelle tâche</h3>
+      <div *ngIf="!isObserver">
+        <mat-form-field appearance="fill">
+          <mat-label>Nom de la tâche</mat-label>
+          <input matInput [(ngModel)]="newTask.name" />
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Description</mat-label>
+          <textarea matInput [(ngModel)]="newTask.description"></textarea>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Date d'échéance</mat-label>
+          <input matInput [(ngModel)]="newTask.dueDate" type="date" />
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Priorité</mat-label>
+          <mat-select [(ngModel)]="newTask.priority">
+            <mat-option *ngFor="let option of priorityOptions" [value]="option">{{ option }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Assigné à</mat-label>
+          <input matInput [(ngModel)]="newTask.assignedTo" />
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Statut</mat-label>
+          <mat-select [(ngModel)]="newTask.status">
+            <mat-option *ngFor="let option of statusOptions" [value]="option">{{ option }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <button mat-raised-button color="primary" (click)="createTask()">Créer Tâche</button>
+      </div>
+  
+      <h3 *ngIf="taskToEdit">Éditer la tâche</h3>
+      <div *ngIf="taskToEdit && !isObserver">
+        <mat-form-field appearance="fill">
+          <mat-label>Nom de la tâche</mat-label>
+          <input matInput [(ngModel)]="taskToEdit.name" />
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Description</mat-label>
+          <textarea matInput [(ngModel)]="taskToEdit.description"></textarea>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Date d'échéance</mat-label>
+          <input matInput [(ngModel)]="taskToEdit.dueDate" type="date" />
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Priorité</mat-label>
+          <mat-select [(ngModel)]="taskToEdit.priority">
+            <mat-option *ngFor="let option of priorityOptions" [value]="option">{{ option }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Assigné à</mat-label>
+          <input matInput [(ngModel)]="taskToEdit.assignedTo" />
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Statut</mat-label>
+          <mat-select [(ngModel)]="taskToEdit.status">
+            <mat-option *ngFor="let option of statusOptions" [value]="option">{{ option }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <button mat-raised-button color="primary" (click)="updateTask()">Mettre à jour</button>
+        <button mat-button (click)="cancelEdit()">Annuler</button>
+      </div>
+    </div>
+  
+    <div *ngIf="isObserver">
+      <p>Les observateurs peuvent consulter la liste des membres et des tâches mais n'ont pas d'accès pour ajouter ou modifier les informations.</p>
+    </div>
+  </div>
+  

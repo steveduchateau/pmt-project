@@ -1,0 +1,84 @@
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #2d3748; /* Couleur sombre pour le titre */
+}
+
+.project-form {
+  background-color: #ffffff; /* Couleur de fond blanche */
+  border-radius: 8px; /* Coins arrondis */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+  padding: 20px; /* Espacement interne */
+  margin-bottom: 40px; /* Espacement entre le formulaire et la liste */
+
+  .form-group {
+    margin-bottom: 15px; /* Espacement entre les groupes de formulaire */
+
+    label {
+      display: block; /* Afficher le label sur une nouvelle ligne */
+      margin-bottom: 5px; /* Espacement en dessous du label */
+      font-weight: bold; /* Mettre le label en gras */
+      color: #4a5568; /* Couleur du texte du label */
+    }
+
+    input,
+    textarea {
+      width: 100%; /* Largeur complète */
+      padding: 10px; /* Espacement interne */
+      border: 1px solid #cbd5e0; /* Bordure grise */
+      border-radius: 4px; /* Coins arrondis */
+      font-size: 1em; /* Taille de la police */
+      transition: border-color 0.3s; /* Transition pour le changement de couleur de bordure */
+
+      &:focus {
+        border-color: #3182ce; /* Bordure bleue au focus */
+        outline: none; /* Supprimer le contour par défaut */
+      }
+    }
+  }
+
+  .error-message {
+    color: #e53e3e; /* Couleur rouge pour le message d'erreur */
+    font-size: 0.9em; /* Taille de police pour le message d'erreur */
+  }
+
+  .btn-submit {
+    background-color: #4a90e2; /* Couleur de fond du bouton */
+    color: white; /* Couleur du texte */
+    border: none; /* Pas de bordure */
+    padding: 10px 15px; /* Espacement interne */
+    border-radius: 4px; /* Coins arrondis */
+    cursor: pointer; /* Curseur pointer sur hover */
+    font-size: 1em; /* Taille de police */
+    transition: background-color 0.3s; /* Transition pour changement de couleur de fond */
+
+    &:hover {
+      background-color: #357ab8; /* Couleur plus sombre au survol */
+    }
+  }
+}
+
+.projects-list {
+  border-top: 1px solid #cbd5e0; /* Bordure supérieure pour séparer la liste */
+  padding-top: 20px; /* Espacement au-dessus de la liste */
+
+  .project-item {
+    border: 1px solid #e2e8f0; /* Bordure grise pour chaque projet */
+    border-radius: 4px; /* Coins arrondis */
+    padding: 15px; /* Espacement interne */
+    margin-bottom: 10px; /* Espacement entre les projets */
+    background-color: #f7fafc; /* Couleur de fond claire pour les projets */
+    transition: background-color 0.3s; /* Transition pour changement de couleur de fond */
+
+    &:hover {
+      background-color: #edf2f7; /* Couleur plus claire au survol */
+    }
+  }
+}
