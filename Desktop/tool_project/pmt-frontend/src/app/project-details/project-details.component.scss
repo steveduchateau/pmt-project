@@ -1,0 +1,103 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fa; /* Couleur de fond douce */
+    margin: 0;
+    padding: 20px;
+  }
+  
+  /* Conteneur principal */
+  h2 {
+    color: #34495e; /* Couleur des titres */
+    font-size: 1.8em;
+    margin-bottom: 15px;
+  }
+  
+  /* Sections de projet */
+  div {
+    background: white; /* Fond blanc pour chaque section */
+    border-radius: 8px; /* Coins arrondis */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    padding: 20px; /* Espacement interne */
+    margin-bottom: 20px; /* Espacement entre les sections */
+  }
+  
+  /* Éléments forts */
+  strong {
+    color: #2c3e50; /* Couleur pour le texte fort */
+  }
+  
+  /* Liste des membres */
+  ul {
+    list-style-type: none; /* Suppression des puces */
+    padding: 0; /* Suppression du remplissage */
+  }
+  
+  /* Style des éléments de la liste */
+  li {
+    display: flex; /* Utilisation de flexbox pour aligner les éléments */
+    justify-content: space-between; /* Espacement entre les éléments */
+    align-items: center; /* Alignement vertical */
+    padding: 10px 0; /* Espacement vertical */
+    border-bottom: 1px solid #ecf0f1; /* Ligne de séparation entre les membres */
+  }
+  
+  li:last-child {
+    border-bottom: none; /* Pas de bordure pour le dernier élément */
+  }
+  
+  /* Boutons */
+  button {
+    margin-left: 10px; /* Espacement à gauche pour les boutons */
+  }
+  
+  /* Styles des champs de formulaire */
+  mat-form-field {
+    width: 100%; /* Largeur complète */
+    margin-bottom: 15px; /* Espacement entre les champs */
+  }
+  
+  .mat-label {
+    color: #34495e; /* Couleur des étiquettes */
+  }
+  
+  /* Boutons principaux */
+  .mat-raised-button {
+    background-color: #3498db; /* Couleur de fond des boutons */
+    color: white; /* Couleur du texte */
+  }
+  
+  .mat-raised-button:hover {
+    background-color: #2980b9; /* Couleur au survol */
+  }
+  
+  /* Section des tâches */
+  h3 {
+    color: #34495e; /* Couleur des sous-titres */
+    font-size: 1.5em; /* Taille des sous-titres */
+    margin-top: 20px; /* Espacement au-dessus des sous-titres */
+  }
+  
+  /* Section d'édition de tâche */
+  .task-edit {
+    background: #e8f8f5; /* Fond différent pour la section d'édition */
+    border-left: 5px solid #1abc9c; /* Bord gauche coloré */
+    padding: 15px; /* Espacement interne */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 600px) {
+    /* Ajustements pour mobile */
+    h2 {
+      font-size: 1.5em; /* Réduction de la taille de titre */
+    }
+  
+    h3 {
+      font-size: 1.2em; /* Réduction de la taille des sous-titres */
+    }
+  
+    button {
+      font-size: 0.9em; /* Réduction de la taille des boutons */
+    }
+  }
+  

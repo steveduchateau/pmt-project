@@ -1,0 +1,49 @@
+<div class="container">
+    <h1 class="title">Créer un Projet</h1>
+    
+    <!-- Formulaire de création de projet -->
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()" class="project-form">
+      <div class="form-group">
+        <label for="name">Nom du Projet</label>
+        <input id="name" formControlName="name" class="form-control" placeholder="Entrez le nom du projet" />
+        <div *ngIf="projectForm.get('name')?.invalid && projectForm.get('name')?.touched" class="error-message">
+          Le nom du projet est requis.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" formControlName="description" class="form-control" rows="4" placeholder="Entrez une description du projet"></textarea>
+        <div *ngIf="projectForm.get('description')?.invalid && projectForm.get('description')?.touched" class="error-message">
+          La description est requise.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="startDate">Date de Début</label>
+        <input type="date" id="startDate" formControlName="startDate" class="form-control" />
+        <div *ngIf="projectForm.get('startDate')?.invalid && projectForm.get('startDate')?.touched" class="error-message">
+          La date de début est requise.
+        </div>
+      </div>
+  
+      <button type="submit" class="btn-submit" [disabled]="projectForm.invalid">Créer le Projet</button>
+    </form>
+    
+    <!-- Section séparée pour la liste des projets -->
+    <div class="projects-list">
+      <h2>Projets Créés</h2>
+      <ul>
+        <li *ngFor="let project of projects" class="project-item">
+          <h3>{{ project.name }}</h3>
+          <p><strong>Description:</strong> {{ project.description }}</p>
+          <p><strong>Date de Début:</strong> {{ project.startDate | date }}</p>
+          <!-- Bouton pour voir les détails d'un projet -->
+          <button (click)="viewProjectDetails(project.id)" class="btn-view-details">
+            Voir les détails
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+  

@@ -1,0 +1,88 @@
+<!-- Indicateur de chargement principal -->
+<div *ngIf="isLoading" class="loading-indicator">
+    Chargement...
+  </div>
+  
+  <!-- Liste des tâches sous forme de tableau -->
+  <div class="task-list">
+    <h2>Tâches en attente</h2>
+    <table class="task-table">
+      <thead>
+        <tr>
+          <th>Nom de la tâche</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of pendingTasks" (click)="viewTaskHistory(task)" class="task-item">
+          <td class="task-name">{{ task.name }}</td>
+          <td class="task-status pending">{{ task.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <h2>Tâches en cours</h2>
+    <table class="task-table">
+      <thead>
+        <tr>
+          <th>Nom de la tâche</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of inProgressTasks" (click)="viewTaskHistory(task)" class="task-item">
+          <td class="task-name">{{ task.name }}</td>
+          <td class="task-status in-progress">{{ task.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <h2>Tâches terminées</h2>
+    <table class="task-table">
+      <thead>
+        <tr>
+          <th>Nom de la tâche</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of completedTasks" (click)="viewTaskHistory(task)" class="task-item">
+          <td class="task-name">{{ task.name }}</td>
+          <td class="task-status completed">{{ task.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Affichage de l'historique des tâches -->
+  <div *ngIf="selectedTask" class="task-history">
+    <h3>Historique de la tâche : {{ selectedTask.name }}</h3>
+    <button (click)="closeTaskHistory()" class="close-button">Fermer</button>
+    <div *ngIf="isLoading" class="loading-indicator">Chargement de l'historique...</div>
+  
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>Action</th>
+          <th>Description précédente</th>
+          <th>Nouvelle description</th>
+          <th>Statut précédent</th>
+          <th>Nouveau statut</th>
+          <th>Modifié par</th>
+          <th>Date de modification</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let entry of taskHistory" class="history-entry">
+          <td>{{ entry.action }}</td>
+          <td>{{ entry.oldDescription }}</td>
+          <td>{{ entry.newDescription }}</td>
+          <td>{{ entry.oldStatus }}</td>
+          <td>{{ entry.newStatus }}</td>
+          <td>{{ entry.modifiedBy }}</td>
+          <td>{{ entry.modifiedAt | date:'short' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
