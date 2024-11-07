@@ -10,13 +10,13 @@ jobs:
     runs-on: ubuntu-latest  # Environnement de test
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # Mise à jour vers v3
+        uses: actions/checkout@v3  # Mise à jour vers v3 pour assurer la compatibilité avec Node.js 20
 
       # Étape 1 : Construction du projet frontend
       - name: Set up Node.js for frontend
-        uses: actions/setup-node@v3  # Mise à jour vers v3
+        uses: actions/setup-node@v3  # Mise à jour vers v3 pour utiliser Node.js 20
         with:
-          node-version: '16'  # Spécifie la version de Node.js
+          node-version: '20'  # Spécifie explicitement la version de Node.js (ici, Node.js 20)
       - name: Install frontend dependencies
         run: |
           cd Desktop/tool_project/pmt-frontend  # Spécifie le chemin correct
@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # Mise à jour vers v3
+        uses: actions/checkout@v3  # Mise à jour vers v3 pour éviter les avertissements
 
       # Connexion à Docker Hub
       - name: Log in to Docker Hub
