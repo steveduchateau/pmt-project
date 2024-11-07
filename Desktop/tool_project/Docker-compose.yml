@@ -13,6 +13,10 @@ services:
       - MYSQL_DB=pmt_db
       - MYSQL_USER=root
       - MYSQL_PASSWORD=steve
+      - MAIL_HOST=smtp.gmail.com
+      - MAIL_PORT=587
+      - MAIL_USERNAME=stevetadesse0@gmail.com
+      - MAIL_PASSWORD=xptw usin ohjm vhzu
     depends_on:
       - db
     networks:
@@ -23,7 +27,7 @@ services:
     container_name: mysql-db
     environment:
       MYSQL_ROOT_PASSWORD: steve
-      MYSQL_DATABASE=pmt_db
+      MYSQL_DATABASE: pmt_db
     ports:
       - "3306:3306"
     volumes:
