@@ -3,13 +3,13 @@ version: '3.8'
 services:
   backend:
     build:
-      context: ./pmt-backend2  # Chemin mis à jour vers pmt-backend2
+      context: ./pmt-backend2  # Chemin vers pmt-backend2
       dockerfile: Dockerfile
     container_name: pmt-backend2
     ports:
       - "8080:8080"
     environment:
-      - MYSQL_HOST=db
+      - MYSQL_HOST=localhost  # Utilisation de localhost pour la base de données dans Docker
       - MYSQL_DB=pmt_db
       - MYSQL_USER=root
       - MYSQL_PASSWORD=steve
@@ -36,9 +36,9 @@ services:
       - app-network
 
   frontend:
-    container_name: pmt-frontend  # Le nom du conteneur frontend à garder
+    container_name: pmt-frontend  # Nom du conteneur frontend
     build:
-      context: ./pmt-frontend  # Le répertoire contenant le Dockerfile pour le frontend
+      context: ./pmt-frontend  # Répertoire contenant le Dockerfile pour le frontend
     ports:
       - "4200:81"  # Mappe le port 81 du conteneur au port 4200 de l'hôte
     networks:
