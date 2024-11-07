@@ -46,7 +46,7 @@ jobs:
       - name: Set up Java for backend
         uses: actions/setup-java@v3
         with:
-          java-version: '21'  # Utilisation de Java 21 pour le backend
+          java-version: '22'  # Utilisation de Java 21 pour le backend
           distribution: 'temurin'  # Distribution 'temurin' d'Adoptium
       - name: Install backend dependencies
         run: |
