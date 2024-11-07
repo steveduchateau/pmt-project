@@ -46,8 +46,10 @@ jobs:
       - name: Set up Java for backend
         uses: actions/setup-java@v3
         with:
-          java-version: '22'  # Utilisation de Java 21 pour le backend
+          java-version: '22'  # Utilisation de Java 22 pour le backend
           distribution: 'temurin'  # Distribution 'temurin' d'Adoptium
+      - name: Check Java version
+        run: java -version  # Vérification de la version de Java utilisée
       - name: Install backend dependencies
         run: |
           cd Desktop/tool_project/pmt-backend2
@@ -98,7 +100,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}  # Nom d'utilisateur Docker Hub
           password: ${{ secrets.DOCKER_PASSWORD }}  # Mot de passe Docker Hub
 
-        # Étape : Construction du projet backend avec Maven
+      # Étape : Construction du projet backend avec Maven
       - name: Build backend project
         run: |
           cd Desktop/tool_project/pmt-backend2
