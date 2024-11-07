@@ -21,6 +21,9 @@ public class ProjectMemberRepositoryTest {
 
     @BeforeEach
     public void setUp() {
+        // Nettoyage de la base de données de test pour éviter des données résiduelles
+        projectMemberRepository.deleteAll();
+
         // Création d'instances de test pour ProjectMember
         member1 = new ProjectMember();
         member1.setProjectId(1L);
