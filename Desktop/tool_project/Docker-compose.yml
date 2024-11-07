@@ -31,13 +31,13 @@ services:
       - db_data:/var/lib/mysql
     networks:
       - app-network
-     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-psteve"]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "mysql-db", "-u", "root", "-psteve"]
       interval: 30s
       retries: 5
       timeout: 10s
       start_period: 10s
-      
+
   frontend:
     container_name: pmt-frontend
     build:
