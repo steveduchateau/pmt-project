@@ -73,9 +73,15 @@ jobs:
 
       # Étape 5 : Tests du backend
       - name: Run backend tests
+        env:
+          SPRING_PROFILES_ACTIVE: ci  # Activer le profil 'ci' pour les tests
+          MYSQL_HOST: mysql            # Hôte de MySQL défini dans la section services
+          MYSQL_DB: pmt_db             # Nom de la base de données
+          MYSQL_USER: root             # Utilisateur MySQL
+          MYSQL_PASSWORD: steve        # Mot de passe MySQL
         run: |
           cd Desktop/tool_project/pmt-backend2
-          ./mvnw test -Dspring.datasource.url=jdbc:mysql://mysql:3306/pmt_db -Dspring.datasource.username=root -Dspring.datasource.password=steve
+          ./mvnw test
 
   dockerize-and-publish:
     needs: build-and-test  # Ce job dépend des tests du job précédent
