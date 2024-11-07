@@ -102,7 +102,7 @@
             ],
             "scripts": [],
             "codeCoverage": true,
-            "browsers": ["ChromeHeadless"],
+            "browsers": "ChromeHeadless",  // Modifié ici pour être une chaîne de caractères
             "karmaConfig": "./karma.conf.js"
           }
         }
