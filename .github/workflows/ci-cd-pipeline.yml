@@ -1,9 +1,8 @@
 name: CI/CD Pipeline
-
 on:
   push:
     branches:
-      - main  # Ou la branche que tu choisis, comme `master` ou `develop`
+      - main  # Ou la branche que tu choisis, comme master ou develop
 
 jobs:
   build-and-test:
@@ -42,23 +41,12 @@ jobs:
         run: |
           cd Desktop/tool_project/pmt-backend2  # Spécifie le chemin correct
           ./mvnw install  # Installation des dépendances backend
-          
-      # Étape 4 : Attente que MySQL soit prêt
-      - name: Wait for MySQL to be ready
-        run: |
-          while ! mysqladmin ping -h mysql --silent; do
-            echo "Waiting for MySQL..."
-            sleep 5
-          done
-        env:
-          MYSQL_HOST: mysql  # Spécifie le nom de l'hôte MySQL, peut être `mysql` si c'est le service docker
-
       - name: Build backend project
         run: |
           cd Desktop/tool_project/pmt-backend2  # Spécifie le chemin correct
           ./mvnw package  # Construction du backend (ajuste cette commande selon ton projet)
 
-      # Étape 5 : Tests du backend
+      # Étape 4 : Tests du backend
       - name: Run backend tests
         run: |
           cd Desktop/tool_project/pmt-backend2  # Spécifie le chemin correct
