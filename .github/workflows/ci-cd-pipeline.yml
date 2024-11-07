@@ -60,9 +60,15 @@ jobs:
       # Étape 4 : Attendre que MySQL soit prêt
       - name: Wait for MySQL to be ready
         run: |
-          while ! mysqladmin ping -h mysql --silent; do
-            echo "Waiting for MySQL...";
-            sleep 5;
+          # Limiter l'attente de MySQL à 30 secondes pour ne pas bloquer indéfiniment
+          for i in {1..6}; do
+            if mysqladmin ping -h mysql --silent; then
+              echo "MySQL is ready!"
+              break
+            else
+              echo "Waiting for MySQL..."
+              sleep 5
+            fi
           done
 
       # Étape 5 : Tests du backend
