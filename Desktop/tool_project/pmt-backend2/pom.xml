@@ -17,7 +17,7 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <java.version>22</java.version> <!-- Définit la version de Java à utiliser -->
+        <java.version>21</java.version> <!-- Définit la version de Java à utiliser -->
     </properties>
 
     <dependencies>
