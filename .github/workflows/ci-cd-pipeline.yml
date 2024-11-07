@@ -19,17 +19,17 @@ jobs:
           node-version: '16'  # Spécifie la version de Node.js
       - name: Install frontend dependencies
         run: |
-          cd pmt-frontend
+          cd Desktop/tool_project/pmt-frontend  # Spécifie le chemin correct
           npm install  # Installation des dépendances frontend
       - name: Build frontend project
         run: |
-          cd pmt-frontend
+          cd Desktop/tool_project/pmt-frontend  # Spécifie le chemin correct
           npm run build  # Build du projet frontend
 
       # Étape 2 : Tests du frontend
       - name: Run frontend tests
         run: |
-          cd pmt-frontend
+          cd Desktop/tool_project/pmt-frontend  # Spécifie le chemin correct
           npm run test -- --watch=false  # Exécute les tests frontend
 
       # Étape 3 : Construction du projet backend
@@ -39,17 +39,17 @@ jobs:
           java-version: '11'  # Spécifie la version de Java pour le backend
       - name: Install backend dependencies
         run: |
-          cd pmt-backend2
+          cd Desktop/tool_project/pmt-backend2  # Spécifie le chemin correct
           ./mvnw install  # Installation des dépendances backend
       - name: Build backend project
         run: |
-          cd pmt-backend2
+          cd Desktop/tool_project/pmt-backend2  # Spécifie le chemin correct
           ./mvnw package  # Construction du backend (ajuste cette commande selon ton projet)
 
       # Étape 4 : Tests du backend
       - name: Run backend tests
         run: |
-          cd pmt-backend2
+          cd Desktop/tool_project/pmt-backend2  # Spécifie le chemin correct
           ./mvnw test  # Exécution des tests backend
 
   dockerize-and-publish:
@@ -69,13 +69,13 @@ jobs:
       # Étape 1 : Dockerisation et push de l'image Docker pour le frontend
       - name: Build and push frontend Docker image
         run: |
-          cd pmt-frontend
+          cd Desktop/tool_project/pmt-frontend  # Spécifie le chemin correct
           docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend-app:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/frontend-app:latest
 
       # Étape 2 : Dockerisation et push de l'image Docker pour le backend
       - name: Build and push backend Docker image
         run: |
-          cd pmt-backend2
+          cd Desktop/tool_project/pmt-backend2  # Spécifie le chemin correct
           docker build -t ${{ secrets.DOCKER_USERNAME }}/backend-app:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/backend-app:latest
