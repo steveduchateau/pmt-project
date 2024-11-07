@@ -1,81 +1,100 @@
 name: CI/CD Pipeline
+
 on:
   push:
     branches:
-      - main  # Ou la branche que tu choisis, comme master ou develop
+      - main  # Branche principale
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest  # Environnement de test
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: steve
+          MYSQL_DATABASE: pmt_db
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=3
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # Mise à jour vers v3 pour assurer la compatibilité avec Node.js 20
+        uses: actions/checkout@v3  # Utilisation de la dernière version de checkout
 
       # Étape 1 : Construction du projet frontend
       - name: Set up Node.js for frontend
-        uses: actions/setup-node@v3  # Mise à jour vers v3 pour utiliser Node.js 20
+        uses: actions/setup-node@v3
         with:
-          node-version: '20'  # Spécifie explicitement la version de Node.js (ici, Node.js 20)
+          node-version: '20'  # Utilisation de Node.js version 20
       - name: Install frontend dependencies
         run: |
-          cd Desktop/tool_project/pmt-frontend  # Spécifie le chemin correct
+          cd Desktop/tool_project/pmt-frontend
           npm install  # Installation des dépendances frontend
       - name: Build frontend project
         run: |
-          cd Desktop/tool_project/pmt-frontend  # Spécifie le chemin correct
-          npm run build  # Build du projet frontend
+          cd Desktop/tool_project/pmt-frontend
+          npm run build  # Construction du projet frontend
 
       # Étape 2 : Tests du frontend
       - name: Run frontend tests
         run: |
-          cd Desktop/tool_project/pmt-frontend  # Spécifie le chemin correct
-          npm run test -- --watch=false  # Exécute les tests frontend
+          cd Desktop/tool_project/pmt-frontend
+          npm run test -- --watch=false  # Exécution des tests frontend
 
       # Étape 3 : Construction du projet backend
       - name: Set up Java for backend
         uses: actions/setup-java@v2
         with:
-          java-version: '21'  # Spécifie la version de Java pour le backend
-          distribution: 'temurin'  # Utilisation de la distribution 'temurin' d'Adoptium
+          java-version: '21'  # Utilisation de Java 21 pour le backend
+          distribution: 'temurin'  # Distribution 'temurin' d'Adoptium
       - name: Install backend dependencies
         run: |
-          cd Desktop/tool_project/pmt-backend2  # Spécifie le chemin correct
+          cd Desktop/tool_project/pmt-backend2
           ./mvnw install  # Installation des dépendances backend
       - name: Build backend project
         run: |
-          cd Desktop/tool_project/pmt-backend2  # Spécifie le chemin correct
-          ./mvnw package  # Construction du backend (ajuste cette commande selon ton projet)
+          cd Desktop/tool_project/pmt-backend2
+          ./mvnw package  # Construction du projet backend
 
-      # Étape 4 : Tests du backend
+      # Étape 4 : Attendre que MySQL soit prêt
+      - name: Wait for MySQL to be ready
+        run: |
+          while ! mysqladmin ping -h mysql --silent; do
+            echo "Waiting for MySQL...";
+            sleep 5;
+          done
+
+      # Étape 5 : Tests du backend
       - name: Run backend tests
         run: |
-          cd Desktop/tool_project/pmt-backend2  # Spécifie le chemin correct
-          ./mvnw test  # Exécution des tests backend
+          cd Desktop/tool_project/pmt-backend2
+          ./mvnw test -Dspring.datasource.url=jdbc:mysql://mysql:3306/pmt_db -Dspring.datasource.username=root -Dspring.datasource.password=steve
 
   dockerize-and-publish:
     needs: build-and-test  # Ce job dépend des tests du job précédent
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # Mise à jour vers v3 pour éviter les avertissements
+        uses: actions/checkout@v3  # Utilisation de la dernière version de checkout
 
       # Connexion à Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}  # Utiliser un secret GitHub pour ton nom d'utilisateur Docker Hub
-          password: ${{ secrets.DOCKER_PASSWORD }}  # Utiliser un secret GitHub pour ton mot de passe Docker Hub
+          username: ${{ secrets.DOCKER_USERNAME }}  # Nom d'utilisateur Docker Hub
+          password: ${{ secrets.DOCKER_PASSWORD }}  # Mot de passe Docker Hub
 
       # Étape 1 : Dockerisation et push de l'image Docker pour le frontend
       - name: Build and push frontend Docker image
         run: |
-          cd Desktop/tool_project/pmt-frontend  # Spécifie le chemin correct
+          cd Desktop/tool_project/pmt-frontend
           docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend-app:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/frontend-app:latest
 
       # Étape 2 : Dockerisation et push de l'image Docker pour le backend
       - name: Build and push backend Docker image
         run: |
-          cd Desktop/tool_project/pmt-backend2  # Spécifie le chemin correct
+          cd Desktop/tool_project/pmt-backend2
           docker build -t ${{ secrets.DOCKER_USERNAME }}/backend-app:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/backend-app:latest
