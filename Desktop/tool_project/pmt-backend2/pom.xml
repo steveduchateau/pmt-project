@@ -102,9 +102,9 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.10.1</version> <!-- Plugin supportant Java 22 -->
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <release>${java.version}</release> <!-- Ajoute la compatibilité avec Java 22 -->
+                    <source>22</source>
+                    <target>22</target>
+                    <release>22</release> <!-- Ajoute la compatibilité avec Java 22 -->
                 </configuration>
             </plugin>
 
