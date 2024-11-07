@@ -37,7 +37,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'  # Spécifie la version de Java pour le backend
-          distribution: 'adoptopenjdk'  # Spécifie la distribution du JDK
+          distribution: 'temurin'  # Utilisation de la distribution 'temurin' d'Adoptium
       - name: Install backend dependencies
         run: |
           cd Desktop/tool_project/pmt-backend2  # Spécifie le chemin correct
