@@ -14,8 +14,7 @@ services:
       - DB_USERNAME=root
       - DB_PASSWORD=steve
     depends_on:
-      db:
-        condition: service_healthy  # Attendre que le service MySQL soit prêt avant de démarrer le backend
+      - db
     networks:
       - app-network
 
@@ -31,24 +30,17 @@ services:
       - db_data:/var/lib/mysql
     networks:
       - app-network
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "mysql-db", "-u", "root", "-psteve"]
-      interval: 30s
-      retries: 5
-      timeout: 10s
-      start_period: 10s
 
   frontend:
-    container_name: pmt-frontend
+    container_name: pmt-frontend  # Le nom du conteneur frontend à garder
     build:
-      context: ./pmt-frontend
+      context: ./pmt-frontend  # Le répertoire contenant le Dockerfile pour le frontend
     ports:
-      - "4200:81"
+      - "4200:81"  # Mappe le port 81 du conteneur au port 4200 de l'hôte
     networks:
       - app-network
     depends_on:
-      backend:
-        condition: service_healthy  # Attendre que le backend soit prêt avant de démarrer le frontend
+      - backend  # Attends que le backend soit prêt avant de démarrer
 
 networks:
   app-network:
