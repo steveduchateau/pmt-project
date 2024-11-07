@@ -97,6 +97,12 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}  # Nom d'utilisateur Docker Hub
           password: ${{ secrets.DOCKER_PASSWORD }}  # Mot de passe Docker Hub
 
+        # Étape : Construction du projet backend avec Maven
+      - name: Build backend project
+        run: |
+          cd Desktop/tool_project/pmt-backend2
+          ./mvnw clean package
+          
       # Étape 1 : Dockerisation et push de l'image Docker pour le frontend
       - name: Build and push frontend Docker image
         run: |
