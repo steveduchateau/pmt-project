@@ -21,8 +21,6 @@ jobs:
           --health-interval=10s 
           --health-timeout=5s 
           --health-retries=3
-        networks:
-          - github_network
 
     steps:
       - name: Checkout code
@@ -136,7 +134,3 @@ jobs:
           cd Desktop/tool_project/pmt-backend2
           docker build -t ${{ secrets.DOCKER_USERNAME }}/backend-app:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/backend-app:latest
-
-networks:
-  github_network:
-    driver: bridge
