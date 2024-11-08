@@ -1,8 +1,15 @@
 # Utilisation de l'image de base openjdk 17
 FROM openjdk:17-jdk-slim
 
-# Installer Maven dans l'image Docker
-RUN apt-get update && apt-get install -y maven
+# Installer Maven à partir des sources officielles
+RUN apt-get update && apt-get install -y wget
+RUN wget https://archive.apache.org/dist/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz
+RUN tar xzvf apache-maven-3.8.6-bin.tar.gz -C /opt
+RUN ln -s /opt/apache-maven-3.8.6/bin/mvn /usr/local/bin/mvn
+
+# Vérification de la version de Maven et de Java
+RUN mvn -version
+RUN java -version
 
 # Définir le répertoire de travail
 WORKDIR /app
