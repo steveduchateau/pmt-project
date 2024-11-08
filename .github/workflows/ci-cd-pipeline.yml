@@ -53,8 +53,7 @@ jobs:
       - name: Install backend dependencies
         run: |
           cd Desktop/tool_project/pmt-backend2
-          mvn clean
-          ./mvnw install  # Installation des dépendances backend
+          ./mvnw clean install  # Installation des dépendances backend
       - name: Build backend project
         run: |
           cd Desktop/tool_project/pmt-backend2
