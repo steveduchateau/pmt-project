@@ -73,6 +73,10 @@ jobs:
               sleep 5
             fi
           done
+          # Si MySQL n'est toujours pas prêt après 30 secondes, échouer le job
+          if ! mysqladmin ping -h mysql --silent; then
+            echo "MySQL failed to start in time!" && exit 1
+          fi
 
       # Étape 5 : Tests du backend
       - name: Run backend tests
