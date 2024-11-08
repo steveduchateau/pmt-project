@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+CI/CD Pipeline
 
 on:
   push:
@@ -73,10 +73,6 @@ jobs:
               sleep 5
             fi
           done
-          # Si MySQL n'est toujours pas prêt après 30 secondes, échouer le job
-          if ! mysqladmin ping -h mysql --silent; then
-            echo "MySQL failed to start in time!" && exit 1
-          fi
 
       # Étape 5 : Tests du backend
       - name: Run backend tests
@@ -122,4 +118,36 @@ jobs:
         run: |
           cd Desktop/tool_project/pmt-backend2
           docker build -t ${{ secrets.DOCKER_USERNAME }}/backend-app:latest .
-          docker push ${{ secrets.DOCKER_USERNAME }}/backend-app:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/backend-app:latest" "name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout du code source
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Configurer Java 17
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'adoptopenjdk'  # ou 'zulu', si vous préférez
+
+    # Vérification de la version de Java (optionnel, mais utile pour le debug)
+    - name: Verify Java version
+      run: java -version
+
+    # Build avec Maven
+    - name: Build with Maven
+      run: mvn clean install
