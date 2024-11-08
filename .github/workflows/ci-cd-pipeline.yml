@@ -16,7 +16,11 @@ jobs:
           MYSQL_DATABASE: pmt_db
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: > 
+          --health-cmd="mysqladmin ping --silent" 
+          --health-interval=10s 
+          --health-timeout=5s 
+          --health-retries=3
 
     steps:
       - name: Checkout code
@@ -27,10 +31,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20'  # Utilisation de Node.js version 20
+
       - name: Install frontend dependencies
         run: |
           cd Desktop/tool_project/pmt-frontend
           npm install  # Installation des dépendances frontend
+
       - name: Build frontend project
         run: |
           cd Desktop/tool_project/pmt-frontend
@@ -48,12 +54,15 @@ jobs:
         with:
           java-version: '17'  # Utilisation de Java 17 pour le backend
           distribution: 'temurin'  # Distribution 'temurin' d'Adoptium
+
       - name: Check Java version
         run: java -version  # Vérification de la version de Java utilisée
+
       - name: Install backend dependencies
         run: |
           cd Desktop/tool_project/pmt-backend2
           ./mvnw clean install  # Installation des dépendances backend
+
       - name: Build backend project
         run: |
           cd Desktop/tool_project/pmt-backend2
@@ -62,7 +71,6 @@ jobs:
       # Étape 4 : Attendre que MySQL soit prêt
       - name: Wait for MySQL to be ready
         run: |
-          # Limiter l'attente de MySQL à 30 secondes pour ne pas bloquer indéfiniment
           for i in {1..6}; do
             if mysqladmin ping -h mysql --silent; then
               echo "MySQL is ready!"
@@ -88,6 +96,7 @@ jobs:
   dockerize-and-publish:
     needs: build-and-test  # Ce job dépend des tests du job précédent
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3  # Utilisation de la dernière version de checkout
@@ -99,12 +108,19 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}  # Nom d'utilisateur Docker Hub
           password: ${{ secrets.DOCKER_PASSWORD }}  # Mot de passe Docker Hub
 
+      # Étape pour configurer Java 17
+      - name: Set up Java for backend
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'  # Utilisation de Java 17 pour le backend
+          distribution: 'temurin'  # Distribution 'temurin' d'Adoptium
+
       # Étape : Construction du projet backend avec Maven
       - name: Build backend project
         run: |
           cd Desktop/tool_project/pmt-backend2
           ./mvnw clean package
-          
+
       # Étape 1 : Dockerisation et push de l'image Docker pour le frontend
       - name: Build and push frontend Docker image
         run: |
