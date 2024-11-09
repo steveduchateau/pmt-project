@@ -20,8 +20,9 @@ COPY . /app
 # Exposer le port de l'application backend
 EXPOSE 8080
 
-# Construire le projet avec Maven (en utilisant directement Maven)
-RUN mvn clean install
+# Construire le projet avec Maven, en ignorant les tests si SKIP_TESTS est défini
+ARG SKIP_TESTS=false
+RUN if [ "$SKIP_TESTS" = "true" ]; then mvn clean install -DskipTests; else mvn clean install; fi
 
 # Démarrer l'application Spring Boot
 CMD ["java", "-jar", "target/app.jar"]
