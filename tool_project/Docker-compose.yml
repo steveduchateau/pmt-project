@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./pmt-backend2  # Répertoire contenant le Dockerfile pour le backend
+      dockerfile: Dockerfile
+    container_name: pmt-backend2
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=pmt_db
+      - DB_USERNAME=root
+      - DB_PASSWORD=steve
+      - SPRING_PROFILES_ACTIVE=docker  # Active le profil Docker pour Spring Boot
+    depends_on:
+      - db
+    networks:
+      - app-network
+    command: >
+      bash -c "
+        until mysql -h mysql-db -u root -psteve -e 'select 1' &>/dev/null; do
+          echo 'Waiting for MySQL...';
+          sleep 5;
+        done;
+        echo 'MySQL is up, starting backend...';
+        exec java -jar /app/pmt-backend2.jar --spring.config.location=file:/app/application-docker.properties  # Lancer l'application Spring Boot avec le fichier de configuration personnalisé
+      "
+    volumes:
+      - ./pmt-backend2/src/main/resources/application-docker.properties:/app/application-docker.properties  # Monter le fichier de configuration
+  db:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: steve
+      MYSQL_DATABASE: pmt_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app-network
+
+  frontend:
+    container_name: pmt-frontend  # Le nom du conteneur frontend à garder
+    build:
+      context: ./pmt-frontend  # Le répertoire contenant le Dockerfile pour le frontend
+    ports:
+      - "4200:80"  # Mappe le port 80 du conteneur au port 4200 de l'hôte
+    networks:
+      - app-network
+    depends_on:
+      - backend  # Attends que le backend soit prêt avant de démarrer
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db_data:
