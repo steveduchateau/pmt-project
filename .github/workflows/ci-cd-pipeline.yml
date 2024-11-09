@@ -99,6 +99,13 @@ jobs:
           sudo apt install openjdk-17-jdk -y
           java -version  # Vérifier l'installation de Java
 
+      # Définir JAVA_HOME et mettre à jour le PATH
+      - name: Set JAVA_HOME and update PATH
+        run: |
+          echo "JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> $GITHUB_ENV
+          echo "PATH=$JAVA_HOME/bin:$PATH" >> $GITHUB_ENV
+          java -version  # Vérification pour s'assurer que Java 17 est bien utilisé
+
       # Vérification de la version de Maven
       - name: Check Maven version
         run: mvn -v
