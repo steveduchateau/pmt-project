@@ -92,7 +92,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Installer Java 17
+      # Installer Java 17 (si nécessaire pour le backend)
       - name: Install Java 17
         run: |
           sudo apt update
@@ -106,15 +106,9 @@ jobs:
           echo "PATH=$JAVA_HOME/bin:$PATH" >> $GITHUB_ENV
           java -version  # Vérification pour s'assurer que Java 17 est bien utilisé
 
-      # Vérification de la version de Maven
+      # Vérification de la version de Maven (si besoin pour le backend)
       - name: Check Maven version
         run: mvn -v
-
-      # Étape : Construction du projet backend avec Maven
-      - name: Build backend project
-        run: |
-          cd Desktop/tool_project/pmt-backend2
-          ./mvnw clean package -e -X  # Débogage de la commande Maven
 
       # Étape 1 : Dockerisation et push de l'image Docker pour le frontend
       - name: Build and push frontend Docker image
