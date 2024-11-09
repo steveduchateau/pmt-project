@@ -110,14 +110,21 @@ jobs:
       - name: Check Maven version
         run: mvn -v
 
-      # Étape 1 : Dockerisation et push de l'image Docker pour le frontend
+      # Étape 1 : Se connecter à Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}  # Nom d'utilisateur Docker Hub
+          password: ${{ secrets.DOCKER_PASSWORD }}  # Jeton d'accès Docker Hub
+
+      # Étape 2 : Dockerisation et push de l'image Docker pour le frontend
       - name: Build and push frontend Docker image
         run: |
           cd Desktop/tool_project/pmt-frontend
           docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend-app:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/frontend-app:latest
 
-      # Étape 2 : Dockerisation et push de l'image Docker pour le backend
+      # Étape 3 : Dockerisation et push de l'image Docker pour le backend
       - name: Build and push backend Docker image
         run: |
           cd Desktop/tool_project/pmt-backend2
