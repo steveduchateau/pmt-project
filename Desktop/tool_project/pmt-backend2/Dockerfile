@@ -14,8 +14,8 @@ RUN java -version
 # Définir le répertoire de travail
 WORKDIR /app
 
-# Copier le projet backend dans l'image Docker
-COPY ./Desktop/tool_project/pmt-backend2 /app
+# Copier le projet backend dans l'image Docker (corriger le chemin en fonction de votre répertoire de travail actuel)
+COPY ./pmt-backend2 /app
 
 # Exposer le port de l'application backend
 EXPOSE 8080
