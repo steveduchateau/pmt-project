@@ -8,7 +8,7 @@ PMT (Project Management Tool) est une plateforme de gestion de projet collaborat
 - **Backend** : Java avec Spring Boot
 - **Base de données** : MySQL
 - **Contrôle de version** : Git
-- **IDE** : IntelliJ IDEA ou Eclipse
+- **IDE** : Vs Code
 
 ## Fonctionnalités principales
 - **Gestion des utilisateurs** : Inscription, connexion et gestion des rôles.
@@ -33,7 +33,7 @@ L'architecture de l'application se divise en deux parties principales :
 ### Prérequis
 - **Node.js** (pour Angular)
 - **JDK 17** ou supérieur (pour Spring Boot)
-- **PostgreSQL** ou **MySQL** (en fonction du choix de la base de données)
+- **MySQL** (en fonction du choix de la base de données)
 
 ### Cloner le repository
 Clonez le repository depuis GitHub :
@@ -49,7 +49,7 @@ mvn spring-boot:run
 
 
 Pour le frontend 
-cd frontend 
+cd pmt-frontend 
 NPM install
 ng build 
 
@@ -83,10 +83,10 @@ Vous pouvez utiliser docker-compose pour démarrer à la fois le backend, le fro
 docker-compose up --build
 Déploiement sur Docker Hub
 Construisez et poussez les images Docker sur Docker Hub :
-docker build -t votre-utilisateur/pmt-backend:latest ./backend
-docker build -t votre-utilisateur/pmt-frontend:latest ./frontend
-docker push votre-utilisateur/pmt-backend:latest
-docker push votre-utilisateur/pmt-frontend:latest
+docker build -t steveduchateau/pmt-backend:latest ./backend
+docker build -t steveduchateau/pmt-frontend:latest ./frontend
+docker push steveduchateau/pmt-backend:latest
+docker push steveduchateau/pmt-frontend:latest
 CI/CD avec GitHub Actions
 Une pipeline CI/CD a été mise en place pour automatiser les tests et le déploiement. La configuration se trouve dans le fichier .github/workflows/ci.yml.
 
@@ -101,7 +101,7 @@ Les rapports de couverture sont générés pour le frontend, avec une couverture
 
 Conclusion
 
-PMT est un outil complet pour la gestion de projets, offrant des fonctionnalités puissantes pour le suivi des tâches et la gestion des utilisateurs. Grâce à l'utilisation de technologies modernes comme Angular, Spring Boot et Docker, l'application est prête à être déployée dans un environnement de production.
+PMT est un outil complet pour la gestion de projets, offrant des fonctionnalités  pour le suivi des tâches et la gestion des utilisateurs. Grâce à l'utilisation de technologies modernes comme Angular, Spring Boot et Docker, l'application est prête à être déployée dans un environnement de production.
 
 Auteurs
 
